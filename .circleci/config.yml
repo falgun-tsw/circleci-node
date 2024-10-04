@@ -5,7 +5,10 @@ jobs:
     docker:
       - image: arvindr226/alpine-ssh
     steps:
-      - run: ssh -oStrictHostKeyChecking=no -v $USER@$DNS "./deploy.sh"
+      # - run: ssh -oStrictHostKeyChecking=no -v $USER@$DNS "./deploy.sh"
+      name: Deploy to ec2
+      command: |
+      ssh -oStrictHostKeyChecking=no -i ~/.ssh/circleci.pub $USER@$DNS "bash -s" < ./deploy.sh
 
 workflows:
   deploy-to-ec2:
