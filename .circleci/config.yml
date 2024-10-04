@@ -9,7 +9,7 @@ jobs:
       - run:
           name: Deploy to ec2
           command: |
-            ssh -oStrictHostKeyChecking=no -i ~/.ssh/circleci.pub $USER@$DNS "bash -s" < ./deploy.sh
+            ssh -oStrictHostKeyChecking=no -i ~/.ssh/circleci.pub $USER@$DNS "bash -s" < ~/deploy.sh
 
 workflows:
   deploy-to-ec2:
