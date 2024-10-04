@@ -1,0 +1,6 @@
+services:
+  img:  
+    build: .
+    container_name: docker-node
+    ports:
+      - 3000:3000
