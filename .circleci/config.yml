@@ -11,7 +11,6 @@ jobs:
           command: |
             ssh -oStrictHostKeyChecking=no -i ~/.ssh/circleci $USER@$DNS "bash /tmp/deploy.sh"
 
-
 workflows:
   deploy-to-ec2:
     jobs:
