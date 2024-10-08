@@ -1,9 +1,9 @@
 version: 2.1 # 2.1 config required to use orbs
 
 orbs:
-  aws-ecr: cimg/aws-ecr@9.3.4
-  aws-ecs: cimg/aws-ecs@6.0.0
-  aws-cli: cimg/aws-cli@5.1.0 
+  aws-ecr: circleci/aws-ecr@9.3.4
+  aws-ecs: circleci/aws-ecs@6.0.0
+  aws-cli: circleci/aws-cli@5.1.0 
 
 jobs:
   verify-deployment:
