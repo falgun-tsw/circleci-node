@@ -39,8 +39,13 @@ jobs:
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
           region: $AWS_REGION
       - run:
-          name: pwd
-          command: pwd
+          name: pwd and test
+          command: |
+            pwd
+            echo "Test file" > test.txt
+            git add test.txt
+            git commit -m "Add test file"
+            git push origin main
       - run:
           name: List Files 
           command: ls -la
