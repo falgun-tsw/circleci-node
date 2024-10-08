@@ -14,6 +14,12 @@ jobs:
       - checkout
       - node/install-packages:
           pkg-manager: npm
+      - run: 
+          name: Install aws cli
+          command: |
+            sudo apt-get update
+            sudo apt-get install -y awscli
+      
       - run:
           name: Build Docker Image
           command: |
@@ -21,12 +27,7 @@ jobs:
             docker build -t circleci-node .
             docker tag circleci-node:latest 010526248296.dkr.ecr.ap-south-1.amazonaws.com/circleci-node:latest
             docker push 010526248296.dkr.ecr.ap-south-1.amazonaws.com/circleci-node:latest
-      # - aws-ecr/push-image:
-          # repository: '${MY_APP_PREFIX}'
-          # tag: latest
-          # region: $AWS_REGION
-      # - run: 
-          # name : push image
+
   register-task-definition:
     docker:
       - image: cimg/node:22.9.0
@@ -40,7 +41,7 @@ jobs:
           command: |
             NEW_TASK_DEF_ARN=$(aws ecs register-task-definition --cli-input-json file://task-definition.json | jq -r .taskDefinition.taskDefinitionArn)
             echo "New Task Definition ARN: $NEW_TASK_DEF_ARN"
-            echo "$NEW_TASK_DEF_ARN" > new-task-def-arn.txt  # Save the ARN to a file for later use
+            echo "$NEW_TASK_DEF_ARN" > new-task-def-arn.txt
 
   deploy:
     docker:
