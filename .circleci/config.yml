@@ -13,6 +13,7 @@ jobs:
     steps:
       - checkout
       - setup_remote_docker
+      #is docker daemon running cannot connect to docker error gone after adding setup_remote_docker
       - node/install-packages:
           pkg-manager: npm
       - run: 
@@ -37,6 +38,9 @@ jobs:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
           region: $AWS_REGION
+      - run:
+        name: List Files in Root Directory
+        command: ls -la
       - run:
           name: Register New Task Definition
           command: |
