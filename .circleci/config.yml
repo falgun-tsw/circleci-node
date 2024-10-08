@@ -1,17 +1,45 @@
-version: 2.1
+version: 2.1 # 2.1 config required to use orbs
+
+orbs:
+  aws-ecr: cimg/aws-ecr@9.3.4
+  aws-ecs: cimg/aws-ecs@6.0.0
+  aws-cli: cimg/aws-cli@5.1.0 
 
 jobs:
-  deploy:
-    docker:
-      - image: arvindr226/alpine-ssh
+  verify-deployment:
+    executor: aws-cli/default
     steps:
-      # - run: ssh -oStrictHostKeyChecking=no -v $USER@$DNS "./deploy.sh"
+      - aws-cli/install
+      - aws-cli/setup:
+          aws-access-key-id: AWS_SECRET_ACCESS_KEY
+          aws-region: AWS_DEFAULT_REGION
+          aws-secret-access-key: AWS_DEFAULT_REGION
       - run:
-          name: Deploy to ec2
-          command: |
-            ssh -oStrictHostKeyChecking=no -i ~/.ssh/circleci $USER@$DNS "bash /tmp/deploy.sh"
+          name: Get last task definition
+          command: >
+            TASK_DEFINITION_ARN=$(aws ecs describe-task-definition \
+                --task-definition ${MY_APP_PREFIX}-service \
+                --output text \
+                --query 'taskDefinition.taskDefinitionArn')
+            echo "export TASK_DEFINITION_ARN='${TASK_DEFINITION_ARN}'" >>
+            "$BASH_ENV"
+      - aws-ecs/verify-revision-is-deployed:
+          family: '${MY_APP_PREFIX}-service'
+          cluster: '${MY_APP_PREFIX}-cluster'
+          task-definition-arn: '${TASK_DEFINITION_ARN}'
 
 workflows:
-  deploy-to-ec2:
+  build-and-deploy:
     jobs:
-      - deploy
+      - aws-ecr/build-and-push-image: # orb built-in job
+          repo: '${MY_APP_PREFIX}'
+          tag: '${CIRCLE_SHA1}'
+      - aws-ecs/deploy-service-update: # orb built-in job
+          requires:
+            - aws-ecr/build-and-push-image
+          family: '${MY_APP_PREFIX}-service'
+          cluster: '${MY_APP_PREFIX}-cluster'
+          container-image-name-updates: 'container=${MY_APP_PREFIX}-service,tag=${CIRCLE_SHA1}'
+      - verify-deployment:
+          requires:
+            - aws-ecs/deploy-service-update
