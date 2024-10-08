@@ -39,10 +39,10 @@ jobs:
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
           region: $AWS_REGION
       - run:
-          name: Check Git Branch
-          command: git branch
+          name: pwd
+          command: pwd
       - run:
-          name: List Files in Root Directory
+          name: List Files 
           command: ls -la
       - run:
           name: Register New Task Definition
