@@ -1,4 +1,3 @@
-
 version: 2.1 
 
 orbs:
@@ -6,6 +5,7 @@ orbs:
   aws-ecs: circleci/aws-ecs@6.0.0
   aws-cli: circleci/aws-cli@5.1.0 
   node: circleci/node@6.1.0
+
 jobs:
   build:
     docker:
@@ -27,7 +27,7 @@ jobs:
 
   register-task-definition:
     docker:
-      - image: cimg/python:3.8
+      - image: cimg/node:22.9.0
     steps:
       - aws-cli/setup:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
@@ -36,13 +36,13 @@ jobs:
       - run:
           name: Register New Task Definition
           command: |
-            # Use the task definition file from your project
             NEW_TASK_DEF_ARN=$(aws ecs register-task-definition --cli-input-json file://task-definition.json | jq -r .taskDefinition.taskDefinitionArn)
             echo "New Task Definition ARN: $NEW_TASK_DEF_ARN"
+            echo "$NEW_TASK_DEF_ARN" > new-task-def-arn.txt  # Save the ARN to a file for later use
 
   deploy:
     docker:
-      - image: cimg/python:3.8  # Use a different image to run AWS CLI
+      - image: cimg/node:22.9.0
     steps:
       - aws-cli/setup:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
@@ -51,13 +51,17 @@ jobs:
       - run:
           name: Update ECS Service
           command: |
-            aws ecs update-service --cluster my-cluster --service my-service --force-new-deployment 
+            NEW_TASK_DEF_ARN=$(cat new-task-def-arn.txt)
+            aws ecs update-service --cluster my-cluster --service my-service --task-definition $NEW_TASK_DEF_ARN --force-new-deployment 
 
 workflows:
   version: 2
-  build:
+  build-and-deploy:
     jobs:
       - build
-      - deploy:
+      - register-task-definition:
           requires:
             - build
+      - deploy:
+          requires:
+            - register-task-definition
