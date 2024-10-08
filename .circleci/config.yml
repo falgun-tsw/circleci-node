@@ -12,6 +12,7 @@ jobs:
       - image: cimg/node:22.9.0
     steps:
       - checkout
+      - setup_remote_docker
       - node/install-packages:
           pkg-manager: npm
       - run: 
