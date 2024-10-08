@@ -20,7 +20,7 @@ jobs:
             aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 010526248296.dkr.ecr.ap-south-1.amazonaws.com
             docker build -t circleci-node .
             docker tag circleci-node:latest 010526248296.dkr.ecr.ap-south-1.amazonaws.com/circleci-node:latest
-          command : docker push 010526248296.dkr.ecr.ap-south-1.amazonaws.com/circleci-node:latest
+            docker push 010526248296.dkr.ecr.ap-south-1.amazonaws.com/circleci-node:latest
       # - aws-ecr/push-image:
           # repository: '${MY_APP_PREFIX}'
           # tag: latest
