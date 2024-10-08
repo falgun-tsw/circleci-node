@@ -39,8 +39,8 @@ jobs:
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
           region: $AWS_REGION
       - run:
-        name: List Files in Root Directory
-        command: ls -la
+          name: List Files in Root Directory
+          command: ls -la
       - run:
           name: Register New Task Definition
           command: |
