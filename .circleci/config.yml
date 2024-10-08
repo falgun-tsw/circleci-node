@@ -5,7 +5,7 @@ orbs:
   aws-ecr: circleci/aws-ecr@9.3.4
   aws-ecs: circleci/aws-ecs@6.0.0
   aws-cli: circleci/aws-cli@5.1.0 
-
+  node: circleci/node@6.1.0
 jobs:
   build:
     docker:
@@ -55,7 +55,7 @@ jobs:
 
 workflows:
   version: 2
-  build-and-deploy:
+  build:
     jobs:
       - build
       - deploy:
