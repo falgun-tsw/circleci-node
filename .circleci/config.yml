@@ -34,6 +34,7 @@ jobs:
     docker:
       - image: cimg/node:22.9.0
     steps:
+      - checkout
       - aws-cli/setup:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
@@ -42,10 +43,10 @@ jobs:
           name: pwd and test
           command: |
             pwd
-            echo "Test file" > test.txt
-            git add test.txt
-            git commit -m "Add test file"
-            git push origin main
+  # echo "Test file" > test.txt
+  # git add test.txt
+  # git commit -m "Add test file"
+  # git push origin main
       - run:
           name: List Files 
           command: ls -la
