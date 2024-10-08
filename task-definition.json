@@ -1,5 +1,5 @@
 {
-    "taskDefinitionArn": "arn:aws:ecs:ap-south-1:010526248296:task-definition/circleci-node:8",
+    "family": "circleci-node",
     "containerDefinitions": [
         {
             "name": "circleci-node",
@@ -34,59 +34,14 @@
             "systemControls": []
         }
     ],
-    "family": "circleci-node",
     "taskRoleArn": "arn:aws:iam::010526248296:role/ecsTaskExecutionRole",
     "executionRoleArn": "arn:aws:iam::010526248296:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
-    "revision": 8,
     "volumes": [],
-    "status": "ACTIVE",
-    "requiresAttributes": [
-        {
-            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
-        },
-        {
-            "name": "ecs.capability.execution-role-awslogs"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.ecr-auth"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.28"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.task-iam-role"
-        },
-        {
-            "name": "ecs.capability.execution-role-ecr-pull"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.18"
-        },
-        {
-            "name": "ecs.capability.task-eni"
-        },
-        {
-            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.29"
-        }
-    ],
-    "placementConstraints": [],
-    "compatibilities": [
-        "EC2"
-    ],
-    "requiresCompatibilities": [
-        "EC2"
-    ],
     "cpu": "512",
     "memory": "512",
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
-    },
-    "registeredAt": "2024-10-08T11:27:02.964Z",
-    "registeredBy": "arn:aws:iam::010526248296:root",
-    "tags": []
+    }
 }
