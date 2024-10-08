@@ -23,7 +23,7 @@ jobs:
             sudo apt-get install -y awscli
       
       - run:
-          name: Build Docker Image
+          name: Build and push Docker Image
           command: |
             aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 010526248296.dkr.ecr.ap-south-1.amazonaws.com
             docker build -t circleci-node .
@@ -38,6 +38,9 @@ jobs:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
           region: $AWS_REGION
+      - run:
+          name: Check Git Branch
+          command: git branch
       - run:
           name: List Files in Root Directory
           command: ls -la
