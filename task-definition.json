@@ -4,8 +4,8 @@
         {
             "name": "circleci-node",
             "image": "010526248296.dkr.ecr.ap-south-1.amazonaws.com/circleci-node:latest",
-            "cpu": 768,
-            "memory": 768,
+            "cpu": 400,
+            "memory": 400,
             "portMappings": [
                 {
                     "containerPort": 3000,
@@ -36,8 +36,8 @@
     "executionRoleArn": "arn:aws:iam::010526248296:role/ecsTaskExecutionRole",
     "networkMode": "awsvpc",
     "volumes": [],
-    "cpu": "768",
-    "memory": "768",
+    "cpu": "400",
+    "memory": "400",
     "runtimePlatform": {
         "cpuArchitecture": "X86_64",
         "operatingSystemFamily": "LINUX"
