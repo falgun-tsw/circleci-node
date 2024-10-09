@@ -40,12 +40,12 @@ jobs:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
           region: $AWS_REGION
-      - run:
-          name: pwd and test
-          command: |
-            pwd
-            echo "Test file" > test.txt
-            cat test.txt
+      # - run:
+      #     name: pwd and test
+      #     command: |
+      #       pwd
+      #       echo "Test file" > test.txt
+      #       cat test.txt
       - run:
           name: Register New Task Definition
           command: |
@@ -58,7 +58,11 @@ jobs:
       - run:
           name: List Files 
           command: ls -la
-
+#ls here shows new_task_def_arn.txt exists but file does reach deploy, using workspace to share data between jobs
+      - persist_to_workspace:
+        root: .
+        paths:
+          - new-task-def-arn.txt
   deploy:
     docker:
       - image: cimg/node:22.9.0
@@ -68,6 +72,8 @@ jobs:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
           region: $AWS_REGION
+      - attach_workspace:
+          at: /workspace
       - run:
           name: List Files 
           command: ls -la
