@@ -73,7 +73,7 @@ jobs:
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
           region: $AWS_REGION
       - attach_workspace:
-          at: /workspace
+          at: .
       - run:
           name: List Files 
           command: ls -la
