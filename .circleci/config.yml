@@ -49,14 +49,14 @@ jobs:
   # git commit -m "Add test file"
   # git push origin main
       - run:
-          name: List Files 
-          command: ls -la
-      - run:
           name: Register New Task Definition
           command: |
             NEW_TASK_DEF_ARN=$(aws ecs register-task-definition --cli-input-json file://task-definition.json | jq -r .taskDefinition.taskDefinitionArn)
             echo "New Task Definition ARN: $NEW_TASK_DEF_ARN"
             echo "$NEW_TASK_DEF_ARN" > new-task-def-arn.txt
+      - run:
+          name: List Files 
+          command: ls -la
 
   deploy:
     docker:
@@ -67,6 +67,9 @@ jobs:
           aws_access_key_id: $AWS_ACCESS_KEY_ID
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
           region: $AWS_REGION
+      - run:
+          name: List Files 
+          command: ls -la
       - run:
           name: Update ECS Service
           command: |
