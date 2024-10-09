@@ -81,7 +81,8 @@ jobs:
           name: Update ECS Service
           command: |
             NEW_TASK_DEF_ARN=$(cat new-task-def-arn.txt)
-            aws ecs update-service --cluster my-cluster --service my-service --task-definition $NEW_TASK_DEF_ARN --force-new-deployment 
+            aws ecs update-service --cluster circleci-node --service circleci-node --task-definition $NEW_TASK_DEF_ARN --force-new-deployment 
+          # input --circleci <cluster name> --service <service name>
 
 workflows:
   version: 2
