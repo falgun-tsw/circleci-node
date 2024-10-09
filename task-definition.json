@@ -4,8 +4,8 @@
         {
             "name": "circleci-node",
             "image": "010526248296.dkr.ecr.ap-south-1.amazonaws.com/circleci-node:latest",
-            "cpu": 512,
-            "memory": 512,
+            "cpu": 768,
+            "memory": 768,
             "portMappings": [
                 {
                     "containerPort": 3000,
