@@ -55,6 +55,9 @@ jobs:
             echo "New Task Definition ARN: $NEW_TASK_DEF_ARN"
             echo "$NEW_TASK_DEF_ARN" > new-task-def-arn.txt
       - run:
+          name: echo new task def 
+          command: echo "$NEW_TASK_DEF_ARN"
+      - run:
           name: List Files 
           command: ls -la
 
