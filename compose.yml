@@ -1,6 +1,7 @@
 services:
   img:  
     # build: .
+    # test
     image: "falgun14/jenkins-node:latest"
     container_name: docker-node
     ports:
