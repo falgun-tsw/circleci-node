@@ -28,6 +28,7 @@ jobs:
     docker:
       - image: cimg/node:22.9.0
     steps:
+      - checkout
       - attach_workspace:
           at: .  
       - run:
