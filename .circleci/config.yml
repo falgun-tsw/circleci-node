@@ -50,6 +50,9 @@ jobs:
           command: |
             pwd
             ls
+      - run: 
+          name: ssh private key 
+          command: echo "$SSH_PRIVATE_KEY"
       - run:
           name: Setup SSH key
           command: |
