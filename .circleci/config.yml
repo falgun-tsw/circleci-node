@@ -43,7 +43,11 @@ jobs:
     docker:
       - image: cimg/node:22.9.0
     steps:
-
+      - run: 
+          name: ls
+          command: |
+            pwd
+            ls
       - attach_workspace:
           at: .  
       - run: 
