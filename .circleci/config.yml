@@ -5,7 +5,7 @@ jobs:
     docker:
       - image: cimg/node:22.9.0
     steps:
-      - checkout
+      - checkout  # Ensure this is the first step to checkout code
       # Download and cache dependencies
       - restore_cache:
           keys:
@@ -23,33 +23,36 @@ jobs:
           name: Running tests
           command: npm test
       - persist_to_workspace:
-          root: .          
+          root: .           
+          paths:
+            - node_modules  
 
   deploy:
     docker:
       - image: cimg/node:22.9.0
     steps:
       - attach_workspace:
-          at: .
+          at: .  
       - run:
           name: Setup SSH key
           command: |
-            echo "$SSH_PRIVATE_KEY" > /.ssh/id_ed25519
-            chmod 600 /.ssh/id_ed25519
+            echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
+            chmod 600 ~/.ssh/id_ed25519
             eval $(ssh-agent -s)
-            ssh-add /.ssh/id_ed25519
+            ssh-add ~/.ssh/id_ed25519
       - run:
           name: AWS EC2 deploy
           command: |
-            ssh -o StrictHostKeyChecking=no -v ubuntu@13.232.237.47
+            ssh -o StrictHostKeyChecking=no -v ubuntu@13.232.237.47 <<'EOF'
             echo "Start deploy"
-            cd ~/circleci-node  
+            cd ~/circleci-node
             git pull origin main
             npm install
             npm run build
-            pm2 stop build/server 
-            pm2 start build/server 
+            pm2 stop build/server
+            pm2 start build/server
             echo "Deploy end"
+            EOF
 
 workflows:
   version: 2
