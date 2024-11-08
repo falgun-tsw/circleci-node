@@ -23,6 +23,11 @@ jobs:
           root: .           
           paths:
             - node_modules  
+      - run: 
+          name: ls
+          command: |
+            pwd
+            ls
 
   deploy:
     docker:
@@ -31,6 +36,11 @@ jobs:
       - checkout
       - attach_workspace:
           at: .  
+      - run: 
+          name: ls
+          command: |
+            pwd
+            ls
       - run:
           name: Setup SSH key
           command: |
