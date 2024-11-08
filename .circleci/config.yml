@@ -5,7 +5,17 @@ jobs:
     docker:
       - image: cimg/node:22.9.0
     steps:
+      - run: 
+          name: ls
+          command: |
+            pwd
+            ls
       - checkout  # Ensure this is the first step to checkout code
+      - run: 
+          name: ls
+          command: |
+            pwd
+            ls
       # Download and cache dependencies
       - restore_cache:
           keys:
