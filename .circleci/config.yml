@@ -43,7 +43,7 @@ jobs:
       - run:
           name: AWS EC2 deploy
           command: |
-            ssh -o StrictHostKeyChecking=no -v ubuntu@13.232.237.47 <<'EOF'
+            ssh -o StrictHostKeyChecking=no -v ubuntu@13.232.237.47 
             echo "Start deploy"
             cd ~/circleci-node
             git pull origin main
@@ -52,7 +52,6 @@ jobs:
             pm2 stop build/server
             pm2 start build/server
             echo "Deploy end"
-            EOF
 
 workflows:
   version: 2
